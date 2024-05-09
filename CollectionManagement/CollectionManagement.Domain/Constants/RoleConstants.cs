@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Constants;
 
-internal static class RoleConstants
+public static class RoleConstants
 {
   public const string User = "User";
 

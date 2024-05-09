@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities.Comments;
 
-internal sealed class Comment : Auditable
+public sealed class Comment : Auditable
 {
   public string Content { get; set; } = string.Empty;
 

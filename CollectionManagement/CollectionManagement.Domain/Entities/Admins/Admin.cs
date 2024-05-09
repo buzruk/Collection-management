@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities.Admins;
 
-internal sealed class Admin : Person
+public sealed class Admin : Person
 {
   public string Address { get; set; } = string.Empty;
 

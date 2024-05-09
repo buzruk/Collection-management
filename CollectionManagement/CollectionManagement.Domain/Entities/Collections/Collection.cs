@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities.Collections;
 
-internal sealed class Collection : Auditable
+public sealed class Collection : Auditable
 {
   public string Name { get; set; } = string.Empty;
 

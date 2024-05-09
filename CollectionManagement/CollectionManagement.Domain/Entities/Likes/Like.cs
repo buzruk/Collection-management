@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities.Likes;
 
-internal class Like : Auditable
+public class Like : Auditable
 {
   public int CollectionId { get; set; }
 

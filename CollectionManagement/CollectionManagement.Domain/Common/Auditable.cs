@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Common;
 
-internal abstract class Auditable
+public abstract class Auditable
 {
   [Required]
   public DateTime CreatedAt { get; set; }

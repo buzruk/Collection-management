@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities.Users;
 
-internal sealed class User : Person
+public sealed class User : Person
 {
   public string UserRole { get; set; } = string.Empty;
 

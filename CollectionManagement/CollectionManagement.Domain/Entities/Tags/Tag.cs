@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities.Tags;
 
-internal class Tag
+public class Tag
 {
   public string Name { get; set; } = string.Empty;
 

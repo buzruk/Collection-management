@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities.Items;
 
-internal class Item : Auditable
+public class Item : Auditable
 {
   public string Name { get; set; } = string.Empty;
 

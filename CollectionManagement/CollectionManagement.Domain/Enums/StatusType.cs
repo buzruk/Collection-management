@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Enums;
 
-internal enum StatusType : byte
+public enum StatusType : byte
 {
   Active,
 

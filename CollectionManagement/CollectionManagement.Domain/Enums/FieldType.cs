@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Enums;
 
-internal enum FieldType : byte
+public enum FieldType : byte
 {
   String,
 

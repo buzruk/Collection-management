@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities;
 
-internal class Person : Auditable
+public class Person : Auditable
 {
   public string UserName { get; set; } = string.Empty;
 

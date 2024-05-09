@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities.CustomFields;
 
-internal sealed class CustomField : Auditable
+public sealed class CustomField : Auditable
 {
   public string Name { get; set; } = string.Empty;
 
