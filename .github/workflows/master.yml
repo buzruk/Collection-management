@@ -34,6 +34,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: |
+        cd CollectionManagement/
+        dotnet restore CollectionManagement.sln
     - name: Test
-      run: dotnet test --configuration Release
+      run: |
+        cd CollectionManagement/
+      	dotnet test --configuration Release
