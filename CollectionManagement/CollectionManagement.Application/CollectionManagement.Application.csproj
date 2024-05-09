@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Buzruk.GenericRepository" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CollectionManagement.Domain\CollectionManagement.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
