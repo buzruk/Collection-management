@@ -19,4 +19,6 @@ jobs:
         cd CollectionManagement/
         dotnet restore CollectionManagement.sln
     - name: Build
-      run: dotnet build CollectionManagement.sln --configuration Release
+      run: |
+        cd CollectionManagement/
+        dotnet build CollectionManagement.sln --configuration Release
