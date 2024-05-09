@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.34825.169
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9B8E900C-1CBD-4345-AEE5-14C7BAD9F2D8}"
+	ProjectSection(SolutionItems) = preProject
+		..\docker-compose.yml = ..\docker-compose.yml
+		..\Dockerfile = ..\Dockerfile
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D45B519D-B6FD-4250-B76C-EF3BBA0651C8}"
 EndProject
@@ -18,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollectionManagement.IntegrationTests", "CollectionManagement.IntegrationTests\CollectionManagement.IntegrationTests.csproj", "{A507A45F-332F-4ED7-8B2C-DBFFBE7EB370}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollectionManagement.UnitTests", "CollectionManagement.UnitTests\CollectionManagement.UnitTests.csproj", "{55307689-F9D8-496A-AC66-B1657BF3F8BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollectionManagement.Shared", "CollectionManagement.Shared\CollectionManagement.Shared.csproj", "{0ADDC313-B426-4463-ACB6-DA5CCDFCC160}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +55,10 @@ Global
 		{55307689-F9D8-496A-AC66-B1657BF3F8BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55307689-F9D8-496A-AC66-B1657BF3F8BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55307689-F9D8-496A-AC66-B1657BF3F8BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ADDC313-B426-4463-ACB6-DA5CCDFCC160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ADDC313-B426-4463-ACB6-DA5CCDFCC160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ADDC313-B426-4463-ACB6-DA5CCDFCC160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ADDC313-B426-4463-ACB6-DA5CCDFCC160}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +70,7 @@ Global
 		{BF3867B6-BD89-4095-B6FD-63DFEDE14031} = {9B8E900C-1CBD-4345-AEE5-14C7BAD9F2D8}
 		{A507A45F-332F-4ED7-8B2C-DBFFBE7EB370} = {D45B519D-B6FD-4250-B76C-EF3BBA0651C8}
 		{55307689-F9D8-496A-AC66-B1657BF3F8BA} = {D45B519D-B6FD-4250-B76C-EF3BBA0651C8}
+		{0ADDC313-B426-4463-ACB6-DA5CCDFCC160} = {9B8E900C-1CBD-4345-AEE5-14C7BAD9F2D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE440909-B898-4787-928C-21D90F834ADA}

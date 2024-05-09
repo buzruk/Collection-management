@@ -6,4 +6,23 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Collections\" />
+    <Folder Include="Services\Comments\" />
+    <Folder Include="Services\CustomFields\" />
+    <Folder Include="Services\Files\" />
+    <Folder Include="Services\Items\" />
+    <Folder Include="Services\Likes\" />
+    <Folder Include="Services\Tags\" />
+    <Folder Include="Services\Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Buzruk.GenericRepository" Version="1.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CollectionManagement.Shared\CollectionManagement.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

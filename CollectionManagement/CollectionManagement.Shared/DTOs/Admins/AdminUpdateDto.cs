@@ -13,7 +13,7 @@ public class AdminUpdateDto : BaseDto
 
   public DateTime BirthDate { get; set; }
 
-  public static implicit operator Admin(AdminUpdateDto dto)
+  public static explicit operator Admin(AdminUpdateDto dto)
   {
     return new Admin()
     {
