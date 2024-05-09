@@ -13,4 +13,5 @@ global using CollectionManagement.Domain.Entities.Collections;
 global using CollectionManagement.Domain.Entities.Users;
 global using CollectionManagement.Shared.DTOs.Files;
 global using CollectionManagement.Domain.Constants;
+global using CollectionManagement.Shared.Security;
 #endregion

@@ -1,70 +1,69 @@
-﻿using CollectionManagement.Infrastructure.Interfaces.Accounts;
-using System.Data;
-using System.Net;
+﻿namespace CollectionManagement.Infrastructure.Services.Accounts;
 
-namespace CollectionManagement.Infrastructure.Services.Accounts;
-
-public class AccountService : IAccountService
+public class AccountService(IUnitOfWorkAsync unitOfWork,
+                            IAuthService authService,
+                            IMemoryCache memoryCache)
+  : IAccountService
 {
-  private readonly IMemoryCache _memoryCache;
-  private readonly IUnitOfWork _repository;
-  private readonly IAuthService _authService;
-  private readonly IMapper _mapper;
+  private readonly IMemoryCache _memoryCache = memoryCache;
+  private readonly IUnitOfWorkAsync _unitOfWork = unitOfWork;
+  private readonly IAuthService _authService = authService;
 
-  public AccountService(IUnitOfWork unitOfWork, IAuthService authService, IMapper mapper, IMemoryCache memoryCache)
+  public async Task<bool> AdminRegisterAsync(AdminRegisterDto adminRegisterDto, 
+                                             CancellationToken cancellationToken = default)
   {
-    this._memoryCache = memoryCache;
-    this._repository = unitOfWork;
-    this._authService = authService;
-    this._mapper = mapper;
-  }
-  public async Task<bool> AdminRegisterAsync(AdminRegisterDto adminRegisterDto)
-  {
-    // Shu namunadan foydalanish kerak
-    // var userRepository = _unitOfWork.GetRepository<User>();
-    // var productRepository = _unitOfWork.GetRepository<Product>();
+    var adminRepository = await _unitOfWork.GetRepositoryAsync<Admin>();
+    var emailcheck = await adminRepository.GetAsync(a => a.Email == adminRegisterDto.Email,
+                                                    cancellationToken: cancellationToken);
 
-    var emailcheck = await _repository.Admins.FirstOrDefault(x => x.Email == adminRegisterDto.Email);
     if (emailcheck is not null)
       throw new StatusCodeException(HttpStatusCode.Conflict, "Email alredy exist");
 
     var hashresult = PasswordHasher.Hash(adminRegisterDto.Password);
-    var admin = _mapper.Map<Admin>(adminRegisterDto);
-    admin.AdminRole = Role.Admin;
+    var admin = (Admin)adminRegisterDto;
+    admin.AdminRole = RoleConstants.Admin;
     admin.PasswordHash = hashresult.Hash;
     admin.Salt = hashresult.Salt;
     admin.CreatedAt = TimeHelper.GetCurrentServerTime();
-    admin.LastUpdatedAt = TimeHelper.GetCurrentServerTime();
-    _repository.Admins.Add(admin);
-    var result = await _repository.SaveChangesAsync();
-    // namuna
-    // _unitOfWork.SaveChanges(); // Commit all changes
+    admin.UpdatedAt = TimeHelper.GetCurrentServerTime();
+    await adminRepository.AddAsync(admin, cancellationToken);
+    var result = await _unitOfWork.SaveChangesAsync(cancellationToken: cancellationToken);
     return result > 0;
   }
-  public async Task<bool> RegisterAsync(AccountRegisterDto registerDto)
+  public async Task<bool> RegisterAsync(AccountRegisterDto registerDto, CancellationToken cancellationToken = default)
   {
-    var emailcheck = await _repository.Users.FirstOrDefault(x => x.Email == registerDto.Email);
+    var userRepository = await _unitOfWork.GetRepositoryAsync<User>();
+    var emailcheck = await userRepository.GetAsync(a => a.Email == registerDto.Email, 
+                                                   cancellationToken: cancellationToken);
+
     if (emailcheck is not null)
       throw new StatusCodeException(HttpStatusCode.Conflict, "Email alredy exist");
 
     var hasherResult = PasswordHasher.Hash(registerDto.Password);
-    var user = _mapper.Map<User>(registerDto);
-    user.UserRole = Role.User;
+    var user = (User)registerDto;
+    user.UserRole = RoleConstants.User;
     user.PasswordHash = hasherResult.Hash;
     user.Salt = hasherResult.Salt;
     user.Status = StatusType.Active;
     user.CreatedAt = TimeHelper.GetCurrentServerTime();
-    user.LastUpdatedAt = TimeHelper.GetCurrentServerTime();
-    _repository.Users.Add(user);
-    var databaseResult = await _repository.SaveChangesAsync();
-    return databaseResult > 0;
+    user.UpdatedAt = TimeHelper.GetCurrentServerTime();
+    await userRepository.AddAsync(user, cancellationToken);
+    var result = await _unitOfWork.SaveChangesAsync(cancellationToken: cancellationToken);
+    return result > 0;
   }
-  public async Task<string> LoginAsync(AccountLoginDto accountLoginDto)
+  public async Task<string> LoginAsync(AccountLoginDto accountLoginDto, CancellationToken cancellationToken = default)
   {
-    var admin = await _repository.Admins.FirstOrDefault(x => x.Email == accountLoginDto.Email);
+    var adminRepository = await _unitOfWork.GetRepositoryAsync<Admin>();
+    var admin = await adminRepository.GetAsync(a => a.Email == accountLoginDto.Email, 
+                                               cancellationToken: cancellationToken);
+
     if (admin is null)
     {
-      var user = await _repository.Users.FirstOrDefault(x => x.Email == accountLoginDto.Email);
+      var userRepository = await _unitOfWork.GetRepositoryAsync<User>();
+      var user = await userRepository.GetAsync(a => a.Email == accountLoginDto.Email, 
+                                               cancellationToken: cancellationToken);
+
+      //var user = await _repository.Users.FirstOrDefault(x => x.Email == accountLoginDto.Email);
       if (user is null) throw new NotFoundException(nameof(accountLoginDto.Email), "No user with this email is found!");
       if (user.Status != StatusType.Blocked)
       {
@@ -95,32 +94,38 @@ public class AccountService : IAccountService
       else throw new NotFoundException(nameof(accountLoginDto.Password), "Incorrect password!");
     }
   }
-  public async Task<bool> DeleteByPasswordAsync(UserDeleteDto userDeleteDto)
+  public async Task<bool> DeleteByPasswordAsync(UserDeleteDto userDeleteDto, CancellationToken cancellationToken = default)
   {
-    var user = await _repository.Users.FindByIdAsync(HttpContextHelper.UserId);
+    var userRepository = await _unitOfWork.GetRepositoryAsync<User>();
+    var user = await userRepository.GetAsync(a => a.Id == HttpContextHelper.UserId, 
+                                             cancellationToken: cancellationToken);
+
     if (user is null) throw new StatusCodeException(HttpStatusCode.NotFound, "User not found");
 
-    var res = PasswordHasher.Verify(userDeleteDto.Password, user.Salt, user.PasswordHash);
-    if (res == false) throw new StatusCodeException(HttpStatusCode.NotFound, "Password is incorrect!");
+    var result = PasswordHasher.Verify(userDeleteDto.Password, user.Salt, user.PasswordHash);
+    if (!result) throw new StatusCodeException(HttpStatusCode.NotFound, "Password is incorrect!");
 
     return true;
   }
-  public async Task<bool> PasswordUpdateAsync(PasswordUpdateDto passwordUpdateDto)
+  public async Task<bool> PasswordUpdateAsync(PasswordUpdateDto passwordUpdateDto, CancellationToken cancellationToken = default)
   {
-    var user = await _repository.Users.FindByIdAsync(HttpContextHelper.UserId);
+    var userRepository = await _unitOfWork.GetRepositoryAsync<User>();
+    var user = await userRepository.GetAsync(a => a.Id == HttpContextHelper.UserId, 
+                                             cancellationToken: cancellationToken);
+
     if (user is not null)
     {
-      var result = PasswordHasher.Verify(passwordUpdateDto.OldPassword, user.Salt, user.PasswordHash);
-      if (result)
+      var isPasswordVerified = PasswordHasher.Verify(passwordUpdateDto.OldPassword, user.Salt, user.PasswordHash);
+      if (isPasswordVerified)
       {
         if (passwordUpdateDto.NewPassword == passwordUpdateDto.VerifyPassword)
         {
           var hash = PasswordHasher.Hash(passwordUpdateDto.VerifyPassword);
           user.Salt = hash.Salt;
           user.PasswordHash = hash.Hash;
-          _repository.Users.Update(user.Id, user);
-          var res = await _repository.SaveChangesAsync();
-          return res > 0;
+          await Task.Run(() => userRepository.Update(user), cancellationToken);
+          var result = await _unitOfWork.SaveChangesAsync(cancellationToken: cancellationToken);
+          return result > 0;
         }
         else throw new StatusCodeException(HttpStatusCode.BadRequest, "new password and verify password must be match");
       }
@@ -128,5 +133,5 @@ public class AccountService : IAccountService
     }
     else throw new StatusCodeException(HttpStatusCode.NotFound, "User not found");
   }
-
 }
+

@@ -2,12 +2,21 @@
 
 public interface IAccountService
 {
-  public Task<bool> AdminRegisterAsync(AdminRegisterDto adminRegisterDto);
-  public Task<bool> RegisterAsync(AccountRegisterDto registerDto);
-  public Task<string> LoginAsync(AccountLoginDto accountLoginDto);
-  public Task<bool> PasswordUpdateAsync(PasswordUpdateDto passwordUpdateDto);
-  public Task<bool> DeleteByPasswordAsync(UserDeleteDto userDeleteDto);
-  //public Task SendCodeAsync(SendToEmailDto sendToEmail);
-  //public Task<bool> VerifyPasswordAsync(UserResetPasswordDto userResetPassword);
+  Task<bool> AdminRegisterAsync(AdminRegisterDto adminRegisterDto, 
+                                CancellationToken cancellationToken = default);
 
+  Task<bool> RegisterAsync(AccountRegisterDto registerDto, 
+                           CancellationToken cancellationToken = default);
+
+  Task<string> LoginAsync(AccountLoginDto accountLoginDto, 
+                          CancellationToken cancellationToken = default);
+
+  Task<bool> PasswordUpdateAsync(PasswordUpdateDto passwordUpdateDto, 
+                                 CancellationToken cancellationToken = default);
+
+  Task<bool> DeleteByPasswordAsync(UserDeleteDto userDeleteDto, 
+                                   CancellationToken cancellationToken = default);
+
+  //Task SendCodeAsync(SendToEmailDto sendToEmail, CancellationToken cancellationToken = default);
+  //Task<bool> VerifyPasswordAsync(UserResetPasswordDto userResetPassword, CancellationToken cancellationToken = default);
 }
