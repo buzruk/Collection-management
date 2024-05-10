@@ -6,7 +6,7 @@ services:
     container_name: "collection"
     restart: always
     ports:
-      - "5050:5000"
+      - "3245:5000"
     networks:
       - web
 
