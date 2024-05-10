@@ -14,7 +14,7 @@ RUN dotnet publish CollectionManagement.Presentation/CollectionManagement.Presen
 # Define the runtime image stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
-ARG APP_NAME=collection
+ARG APP_NAME=CollectionManagement.Presentation
 
 # Set the working directory
 WORKDIR /App
