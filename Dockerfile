@@ -14,8 +14,6 @@ RUN dotnet publish CollectionManagement.Presentation/CollectionManagement.Presen
 # Define the runtime image stage
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
-ARG APP_NAME=CollectionManagement.Presentation
-
 # Set the working directory
 WORKDIR /App
 
@@ -29,5 +27,5 @@ EXPOSE 5000
 ENV ASPNETCORE_URLS=http://+:5000
 
 # Entrypoint to run the application
-ENTRYPOINT ["dotnet", "$APP_NAME.dll"]
+ENTRYPOINT ["dotnet", "CollectionManagement.Presentation.dll"]
 
