@@ -1,6 +1,6 @@
 ﻿namespace CollectionManagement.Domain.Entities.Tags;
 
-public class Tag
+public class Tag : Auditable
 {
   public string Name { get; set; } = string.Empty;
 

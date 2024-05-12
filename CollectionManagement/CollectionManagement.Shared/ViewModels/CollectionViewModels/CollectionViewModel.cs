@@ -24,7 +24,7 @@ public class CollectionViewModel
 
   public int CustomFieldId { get; set; }
 
-  public static implicit operator CollectionViewModel(Collection model)
+  public static explicit operator CollectionViewModel(Collection model)
   {
     return new CollectionViewModel()
     {

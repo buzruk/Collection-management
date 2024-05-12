@@ -7,18 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Collections\" />
-    <Folder Include="Services\Comments\" />
-    <Folder Include="Services\CustomFields\" />
-    <Folder Include="Services\Files\" />
-    <Folder Include="Services\Items\" />
-    <Folder Include="Services\Likes\" />
-    <Folder Include="Services\Tags\" />
-    <Folder Include="Services\Users\" />
+    <Content Remove="C:\Users\buzurgmexr\.nuget\packages\buzruk.genericrepository\1.4.0\contentFiles\any\net8.0\icon.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Buzruk.GenericRepository" Version="1.4.0" />
+    <PackageReference Include="Buzruk.GenericRepository" Version="1.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.5.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.1" />
   </ItemGroup>
 
   <ItemGroup>

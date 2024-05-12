@@ -10,9 +10,7 @@ public interface IAdminUserService
 
   //Task<List<UserViewModel>> GetAllAsync(string search, CancellationToken cancellationToken = default);
 
-  // Task<PagedList<UserViewModel>> GetAllAsync(PaginationParams @params, CancellationToken cancellationToken = default);
-  // TODO: Fix it
-  Task<PagedResults<UserViewModel>> GetAllAsync(CancellationToken cancellationToken = default);
+  Task<PagedResults<UserViewModel>> GetPagedAsync(PaginationParams @params, CancellationToken cancellationToken = default);
 
   //Task<PagedList<UserViewModel>> GetByNameAsync(PaginationParams @params, string name, CancellationToken cancellationToken = default);
 

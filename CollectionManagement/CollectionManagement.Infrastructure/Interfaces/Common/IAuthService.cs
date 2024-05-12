@@ -2,6 +2,6 @@
 
 public interface IAuthService
 {
-  string GenerateToken(Person person, string role, CancellationToken cancellationToken = default);
+  string GenerateToken(Person person, string role);
 }
 

@@ -2,8 +2,7 @@
 
 public interface IItemService
 {
-  // Task<PagedList<ItemViewModel>> GetAllItemAsync(int id, PaginationParams @params);
-  Task<PagedResults<ItemViewModel>> GetAllItemAsync(CancellationToken cancellationToken = default);
+  Task<PagedResults<ItemViewModel>> GetPagedAsync(int id, PaginationParams @params, CancellationToken cancellationToken = default);
 
   // Task<List<LikePerItemViewModel>> GetAllLikeByItemAsync(int collectionId, CancellationToken cancellationToken = default);
 

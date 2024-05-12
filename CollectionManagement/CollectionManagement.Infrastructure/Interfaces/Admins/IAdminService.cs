@@ -8,11 +8,7 @@ public interface IAdminService
 
   Task<bool> ActiveAsync(List<int> ids, CancellationToken cancellationToken = default);
 
-  Task<List<AdminViewModel>> GetAllAsync(string search, CancellationToken cancellationToken = default);
-
-  //Task<PagedList<AdminViewModel>> GetAllAsync(PaginationParams @params);
-  // TODO: Fix it
-  Task<PagedResults<AdminViewModel>> GetPagedAsync(CancellationToken cancellationToken = default);
+  Task<PagedResults<AdminViewModel>> GetPagedAsync(PaginationParams @params, CancellationToken cancellationToken = default);
 
   //Task<PagedList<AdminViewModel>> GetByNameAsync(PaginationParams @params, string name);
   Task<bool> UpdateAsync(int id, AdminUpdateDto adminUpdateDto, CancellationToken cancellationToken = default);

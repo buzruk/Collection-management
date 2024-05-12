@@ -18,19 +18,49 @@ public class UserViewModel
 
   public DateTime CreatedAt { get; set; } = default!;
 
-  //public static implicit operator UserViewModel(User model)
-  //{
-  //  return new UserViewModel()
-  //  {
-  //    Id = model.Id,
-  //    UserName = model.UserName,
-  //    ImagePath = model.Image,
-  //    Email = model.Email,
-  //    StatusType = model.Status,
-  //    UserRole = model.UserRole,
-  //    BirthDate = model.BirthDate,
-  //    CreatedAt = model.CreatedAt
-  //  };
-  //}
+  public static explicit operator UserViewModel(Admin model)
+  {
+    return new UserViewModel()
+    {
+      Id = model.Id,
+      UserName = model.UserName,
+      ImagePath = model.Image,
+      Email = model.Email,
+      StatusType = model.Status,
+      //UserRole = model.AdminRole,
+      BirthDate = model.BirthDate,
+      CreatedAt = model.CreatedAt
+    };
+  }
+
+  public static explicit operator UserViewModel(User model)
+  {
+    return new UserViewModel()
+    {
+      Id = model.Id,
+      UserName = model.UserName,
+      ImagePath = model.Image,
+      Email = model.Email,
+      StatusType = model.Status,
+      UserRole = model.UserRole,
+      BirthDate = model.BirthDate,
+      CreatedAt = model.CreatedAt
+    };
+  }
+
+  public static explicit operator User(UserViewModel model)
+  {
+    return new User()
+    {
+      Id = model.Id,
+      UserName = model.UserName,
+      Image = model.ImagePath,
+      Email = model.Email,
+      Status = model.StatusType,
+      UserRole = model.UserRole,
+      BirthDate = model.BirthDate,
+      CreatedAt = model.CreatedAt
+    };
+  }
 }
 

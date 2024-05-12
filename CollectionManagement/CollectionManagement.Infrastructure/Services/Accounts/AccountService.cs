@@ -67,8 +67,8 @@ public class AccountService(IUnitOfWorkAsync unitOfWork,
       if (user is null) throw new NotFoundException(nameof(accountLoginDto.Email), "No user with this email is found!");
       if (user.Status != StatusType.Blocked)
       {
-        var hasherResult = PasswordHasher.Verify(accountLoginDto.Password, user.Salt, user.PasswordHash);
-        if (hasherResult)
+        var isPasswordVerified = PasswordHasher.Verify(accountLoginDto.Password, user.Salt, user.PasswordHash);
+        if (isPasswordVerified)
         {
           string token = _authService.GenerateToken(user, "user");
           return token;
@@ -79,8 +79,8 @@ public class AccountService(IUnitOfWorkAsync unitOfWork,
     }
     else
     {
-      var hasherResult = PasswordHasher.Verify(accountLoginDto.Password, admin.Salt, admin.PasswordHash);
-      if (hasherResult)
+      var isPasswordVerified = PasswordHasher.Verify(accountLoginDto.Password, admin.Salt, admin.PasswordHash);
+      if (isPasswordVerified)
       {
         string token = "";
         if (admin.Email != null)
@@ -102,8 +102,8 @@ public class AccountService(IUnitOfWorkAsync unitOfWork,
 
     if (user is null) throw new StatusCodeException(HttpStatusCode.NotFound, "User not found");
 
-    var result = PasswordHasher.Verify(userDeleteDto.Password, user.Salt, user.PasswordHash);
-    if (!result) throw new StatusCodeException(HttpStatusCode.NotFound, "Password is incorrect!");
+    var isPasswordVerified = PasswordHasher.Verify(userDeleteDto.Password, user.Salt, user.PasswordHash);
+    if (!isPasswordVerified) throw new StatusCodeException(HttpStatusCode.NotFound, "Password is incorrect!");
 
     return true;
   }
@@ -123,7 +123,7 @@ public class AccountService(IUnitOfWorkAsync unitOfWork,
           var hash = PasswordHasher.Hash(passwordUpdateDto.VerifyPassword);
           user.Salt = hash.Salt;
           user.PasswordHash = hash.Hash;
-          await Task.Run(() => userRepository.Update(user), cancellationToken);
+           await userRepository.UpdateAsync(user);
           var result = await _unitOfWork.SaveChangesAsync(cancellationToken: cancellationToken);
           return result > 0;
         }

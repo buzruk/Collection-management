@@ -2,7 +2,7 @@
 
 public interface IFileService
 {
-  Task<string> CreateFile(FileDto filemodel, CancellationToken cancellationToken = default);
+  Task<string> CreateFileAsync(FileDto filemodel, CancellationToken cancellationToken = default);
 
   Task<bool> DeleteFileAsync(string path, CancellationToken cancellationToken = default);
 

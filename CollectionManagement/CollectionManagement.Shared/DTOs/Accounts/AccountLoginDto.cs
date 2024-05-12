@@ -1,4 +1,4 @@
-﻿namespace CollectionManagement.DTOs.Accounts;
+﻿namespace CollectionManagement.Shared.DTOs.Accounts;
 
 public class AccountLoginDto
 {

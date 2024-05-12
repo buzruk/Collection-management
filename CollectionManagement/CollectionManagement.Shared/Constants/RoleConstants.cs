@@ -1,4 +1,4 @@
-﻿namespace CollectionManagement.Domain.Constants;
+﻿namespace CollectionManagement.Shared.Constants;
 
 public static class RoleConstants
 {
