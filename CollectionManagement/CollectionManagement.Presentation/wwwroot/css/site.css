@@ -20,3 +20,71 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*for dark mode*/
+.dark-mode-body {
+  background-color: white;
+  color: black;
+  font-size: 15px;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
+
+
+/*For table*/
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+  .table th, .table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  /* Style for image */
+  .table img {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Style for name and description */
+  .table .text-start {
+    text-align: start;
+  }
+
+  /* Style for like button */
+  .table .like-button {
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  /* Style for delete button */
+  .table .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+    .table .btn-danger:hover {
+      background-color: #c82333;
+    }
+
+/*for like*/
+.like-button {
+  background-color: white;
+  color: black;
+  /* Add your other styles here */
+}

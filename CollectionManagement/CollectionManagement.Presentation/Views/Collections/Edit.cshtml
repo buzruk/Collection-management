@@ -1,0 +1,50 @@
+﻿@model CollectionUpdateDto
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit Your Collection</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-controller="collections" asp-action="update" asp-route-id="@ViewBag.Id" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Topics" class="control-label"></label>
+                <select asp-for="Topics">
+                    <option value="1">Books</option>
+                    <option value="2">Favorites</option>
+                    <option value="3">Stamps</option>
+                    <option value="4">Whiskeys</option>
+                    <option value="5">Toys</option>
+                    <option value="6">Cars</option>
+                    <option value="7">Antiques</option>
+                    <option value="8">Other</option>
+                </select>
+                <span asp-validation-for="Topics" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" class="form-control" type="file" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

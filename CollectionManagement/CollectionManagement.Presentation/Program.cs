@@ -1,36 +1,36 @@
-namespace CollectionManagement.Presentation
+using CollectionManagement.Presentation;
+
+try
 {
-  public class Program
-  {
-    public static void Main(string[] args)
-    {
-      var builder = WebApplication.CreateBuilder(args);
+  Log.Logger = new LoggerConfiguration()
+  .MinimumLevel.Debug()
+  .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+  .Enrich.FromLogContext()
+  .WriteTo.Console()
+  .WriteTo.File(
+     Path.Combine("logs", "diagnostics.txt"),
+     rollingInterval: RollingInterval.Day,
+     fileSizeLimitBytes: 10 * 1024 * 1024,
+     retainedFileCountLimit: 30,
+     rollOnFileSizeLimit: true,
+     shared: true,
+     flushToDiskInterval: TimeSpan.FromSeconds(1))
+  .CreateLogger();
+  Log.Information("\nStarting web application");
 
-      // Add services to the container.
-      builder.Services.AddControllersWithViews();
+  var builder = WebApplication.CreateBuilder(args);
+  builder.AddDIServices();
+  builder.Host.UseSerilog();
 
-      var app = builder.Build();
-
-      // Configure the HTTP request pipeline.
-      if (!app.Environment.IsDevelopment())
-      {
-        app.UseExceptionHandler("/Home/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-        app.UseHsts();
-      }
-
-      app.UseHttpsRedirection();
-      app.UseStaticFiles();
-
-      app.UseRouting();
-
-      app.UseAuthorization();
-
-      app.MapControllerRoute(
-          name: "default",
-          pattern: "{controller=Home}/{action=Index}/{id?}");
-
-      app.Run();
-    }
-  }
+  var app = builder.Build();
+  app.AddMiddleware();
+  app.Run();
+}
+catch (Exception ex)
+{
+  Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+  Log.CloseAndFlush();
 }

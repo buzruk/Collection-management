@@ -1,9 +1,42 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>6abfcc1e-223b-49ca-afda-e5995c3d8c34</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CollectionManagement.Application\CollectionManagement.Application.csproj" />
+    <ProjectReference Include="..\CollectionManagement.Infrastructure\CollectionManagement.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\" />
+    <Folder Include="Areas\AdminUser\" />
+    <Folder Include="wwwroot\media\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="\\Mac\Home\Desktop\Collection-management\CollectionManagement\CollectionManagement.Presentation\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="\\Mac\Home\Desktop\Collection-management\CollectionManagement\CollectionManagement.Presentation\.editorconfig" />
+  </ItemGroup>
 
 </Project>

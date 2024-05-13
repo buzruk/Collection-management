@@ -12,7 +12,7 @@ public class LikeService(IUnitOfWorkAsync unitOfWork, IIdentityService identityS
   {
     var userid = _identityService.Id ?? 0;
     var likeRepository = await _unitOfWork.GetRepositoryAsync<Like>();
-    var like = likeRepository.GetAsync(l => l.CollectionId == collectionId && l.UserId == userid);
+    var like = await likeRepository.GetAsync(l => l.CollectionId == collectionId && l.UserId == userid);
 
     if (like != null && userid == like?.UserId)
     {
@@ -37,7 +37,7 @@ public class LikeService(IUnitOfWorkAsync unitOfWork, IIdentityService identityS
   {
     var userid = _identityService.Id ?? 0;
     var likeItemRepository = await _unitOfWork.GetRepositoryAsync<LikeItem>();
-    var likeItem = likeItemRepository.GetAsync(l => l.ItemId == itemId && l.UserId == userid);
+    var likeItem = await likeItemRepository.GetAsync(l => l.ItemId == itemId && l.UserId == userid);
 
     if (likeItem != null && userid == likeItem?.UserId)
     {

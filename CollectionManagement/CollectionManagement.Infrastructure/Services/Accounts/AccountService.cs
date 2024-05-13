@@ -85,10 +85,11 @@ public class AccountService(IUnitOfWorkAsync unitOfWork,
         string token = "";
         if (admin.Email != null)
         {
-          token = _authService.GenerateToken(admin, "admin");
+          // Todo: Fix it
+          //token = _authService.GenerateToken(admin, "admin");
           return token;
         }
-        token = _authService.GenerateToken(admin, "admin");
+        //token = _authService.GenerateToken(admin, "admin");
         return token;
       }
       else throw new NotFoundException(nameof(accountLoginDto.Password), "Incorrect password!");

@@ -1,8 +1,72 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model PagedResults<CollectionViewModel>
+@{
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<form asp-controller="collections" asp-action="search" method="get">
+  <p>
+    Title: <input type="text" name="name" />
+    <input type="submit" value="Filter" />
+  </p>
+</form>
+<table class="table" class="user-registry">
+  <thead>
+    <tr>
+      <th>
+        Image
+      </th>
+      <th>
+        CollectionName
+      </th>
+      <th>
+        Topics
+      </th>
+      <th>
+        Description
+      </th>
+      <th>
+        LikeCount
+      </th>
+      <th>
+        Like
+      </th>
+      <th>
+        Action
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var item in Model.Items)
+    {
+      <tr>
+        <td class="text-start">
+          @if (item.ImagePath is null)
+          {
+            <img src="~/media/images/new-collection.jpg" alt="Image" style="width: 80px; height: 80px;" />
+          }
+          <img src="~/@item.ImagePath" alt="Image" style="width: 80px; height: 80px;" />
+        </td>
+        <td class="text-start">
+          <span class="fw-bold px-sm-0 text-gray-500">@item.Name</span>
+        </td>
+        <td class="text-start">
+          <span class="fw-bold text-gray-500">@item.Topics</span>
+        </td>
+        <td class="text-start">
+          <span class="fw-bold text-gray-500">@item.Description</span>
+        </td>
+        <td class="text-start">
+          <span class="fw-bold text-gray-500">@item.LikeCount</span>
+        </td>
+        <td>
+          <a asp-controller="collections" asp-action="likecollection" asp-route-collectionId="@item.Id">
+            <button class="like-button" onclick="toggleLike()">Like</button>
+          </a>
+        </td>
+        <td>
+          <a asp-controller="items" asp-action="Index" asp-route-id="@item.Id">View Items</a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

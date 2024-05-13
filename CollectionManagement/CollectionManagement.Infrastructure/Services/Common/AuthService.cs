@@ -5,7 +5,7 @@ public class AuthService(IConfiguration config)
 {
   private readonly IConfiguration _config = config.GetSection("Jwt");
 
-  public string GenerateToken(Person user, string role)
+  public string GenerateToken(User user, string role)
   {
     var claims = new[]
        {
