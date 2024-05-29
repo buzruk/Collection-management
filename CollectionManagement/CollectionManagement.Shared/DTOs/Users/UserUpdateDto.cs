@@ -1,7 +1,9 @@
 ﻿namespace CollectionManagement.Shared.DTOs.Users;
 
 public class UserUpdateDto
-{
+{ 
+  public string Id { get; set; } = string.Empty;
+
   [Required, MaxLength(30), MinLength(3)]
   public string UserName { get; set; } = string.Empty;
 

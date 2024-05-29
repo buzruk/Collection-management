@@ -1,4 +1,6 @@
-﻿namespace CollectionManagement.Shared.ViewModels.CollectionViewModels;
+﻿using CollectionManagement.Domain.Entities;
+
+namespace CollectionManagement.Shared.ViewModels.CollectionViewModels;
 
 public class CollectionViewModel
 {
@@ -20,11 +22,11 @@ public class CollectionViewModel
 
   public bool IsLiked { get; set; }
 
-  public int UserId { get; set; }
+  public string UserId { get; set; } = string.Empty;
 
   public int CustomFieldId { get; set; }
 
-  public static implicit operator CollectionViewModel(Collection model)
+  public static explicit operator CollectionViewModel(Collection model)
   {
     return new CollectionViewModel()
     {

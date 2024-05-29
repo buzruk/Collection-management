@@ -7,22 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Collections\" />
-    <Folder Include="Services\Comments\" />
-    <Folder Include="Services\CustomFields\" />
-    <Folder Include="Services\Files\" />
-    <Folder Include="Services\Items\" />
-    <Folder Include="Services\Likes\" />
-    <Folder Include="Services\Tags\" />
-    <Folder Include="Services\Users\" />
+    <PackageReference Include="Buzruk.GenericRepository" Version="1.8.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Buzruk.GenericRepository" Version="1.4.0" />
+    <ProjectReference Include="..\CollectionManagement.Domain\CollectionManagement.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CollectionManagement.Shared\CollectionManagement.Shared.csproj" />
-  </ItemGroup>
-
 </Project>

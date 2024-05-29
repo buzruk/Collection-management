@@ -1,0 +1,141 @@
+﻿@model PagedResults<UserViewModel>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Control</title>
+    <style>
+        .user-registry-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .user-registry-container table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .user-registry-container th,
+            .user-registry-container td {
+                padding: 10px;
+                border: 1px solid #ddd;
+                text-align: left;
+            }
+
+            .user-registry-container th {
+                background-color: #f2f2f2;
+            }
+
+            .user-registry-container .tr-shadow {
+                background-color: #fff;
+            }
+
+                .user-registry-container .tr-shadow:hover {
+                    background-color: #f2f2f2;
+                }
+
+            .user-registry-container input[type="submit"] {
+                padding: 8px 16px;
+                cursor: pointer;
+                border: none;
+                border-radius: 4px;
+                background-color: #007bff;
+                color: #fff;
+                transition: background-color 0.3s ease;
+            }
+
+                .user-registry-container input[type="submit"]:hover {
+                    background-color: #0056b3;
+                }
+
+    </style>
+</head>
+<body>
+    <section id="main">
+        <div class="user-registry-container">
+            <div class="user-info">
+                <span>Hello, <b>@ViewBag.UserName</b></span>
+            </div>
+            <!--user information table-->
+            <h4>User Control</h4>
+            @{
+                var blockForm = Html.BeginForm("delete", "Home", FormMethod.Post);
+                var activeForm = Html.BeginForm("block", "Home", FormMethod.Post);
+                var deleteForm = Html.BeginForm("active", "Home", FormMethod.Post);
+                if (deleteForm != null && activeForm != null && blockForm != null)
+                {
+                    <div class="block-user">
+                        <input asp-controller="admins" asp-action="delete" type="submit" value="block Selected" />
+                        <input asp-controller="admins" asp-action="block" type="submit" value="unblock Selected" />
+                        <input asp-controller="admins" asp-action="active" type="submit" value="delete Selected" />
+                    </div>
+                //     @using (Html.BeginForm("Delete", "Home", FormMethod.Post))
+                //     {
+                //         <input type="submit" value="Delete Selected" />
+                //     }
+
+                //     @using (Html.BeginForm("Block", "Home", FormMethod.Post))
+                //     {
+                //         <input type="submit" value="Block Selected" />
+                //     }
+
+                //     @using (Html.BeginForm("Active", "Home", FormMethod.Post))
+                //     {
+                //         <input type="submit" value="Unblock Selected" />
+                // }
+
+                    <table class="user-registry">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>id</th>
+                                <th>UserName</th>
+                                <th>B-De-Mail</th>
+                                <th>e-Mail</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model.Items)
+                            {
+                                <tr class="tr-shadow text-dark">
+                                    <td class="text-start px-sm-1">
+                                        <input class="fw-bold" type="checkbox" name="ids" id="user-@user.Id" value="@user.Id" />
+                                    </td>
+                                    <td class="text-start px-sm-1">
+                                        <span class="fw-bold">@user.Id</span>
+                                    </td>
+                                    <td class="text-start">
+                                        <span class="fw-bold px-sm-0 text-gray-500">@user.UserName</span>
+                                    </td>
+                                    <td class="text-start">
+                                        <span class="fw-bold text-gray-500">@user.BirthDate</span>
+                                    </td>
+                                    <td class="text-start">
+                                        <span class="fw-bold px-sm-0 text-gray-500">@user.Email</span>
+                                    </td>
+                                    <td class="text-start">
+                                        <span class="fw-bold text-gray-500">@user.StatusType</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                } 
+            }
+        </div>
+    </section>
+    <!--footer-->
+    <footer>
+        <!--copy right-->
+    </footer>
+</body>
+
+</html>
+
