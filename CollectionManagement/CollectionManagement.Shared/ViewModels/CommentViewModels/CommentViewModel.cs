@@ -1,4 +1,6 @@
-﻿namespace CollectionManagement.Shared.ViewModels.CommentViewModels;
+﻿using CollectionManagement.Domain.Entities;
+
+namespace CollectionManagement.Shared.ViewModels.CommentViewModels;
 
 public class CommentViewModel
 {
@@ -8,7 +10,7 @@ public class CommentViewModel
 
   public int ItemId { get; set; }
 
-  public int UserId { get; set; }
+  public string UserId { get; set; } = string.Empty;
 
   public static explicit operator Comment(CommentViewModel model)
   {

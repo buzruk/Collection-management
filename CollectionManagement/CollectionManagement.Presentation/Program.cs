@@ -19,6 +19,7 @@ try
   Log.Information("\nStarting web application");
 
   var builder = WebApplication.CreateBuilder(args);
+
   builder.AddDIServices();
   builder.Host.UseSerilog();
 

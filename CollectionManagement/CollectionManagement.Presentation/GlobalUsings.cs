@@ -1,53 +1,45 @@
 ﻿#region Usings
 global using Microsoft.AspNetCore.Mvc;
-global using CollectionManagement.Infrastructure.Interfaces.Collections;
-global using CollectionManagement.Shared.Utils;
-global using System.Diagnostics;
-global using CollectionManagement.Infrastructure.Interfaces.Accounts;
-global using CollectionManagement.Shared.DTOs.Accounts;
-global using CollectionManagement.Shared.DTOs.Admins;
-global using CollectionManagement.Shared.Exceptions;
-global using CollectionManagement.Shared.Helpers;
-global using CollectionManagement.Infrastructure.Interfaces.Likes;
-global using CollectionManagement.Infrastructure.Interfaces.Users;
-global using CollectionManagement.Shared.DTOs.Collections;
-global using Microsoft.AspNetCore.Authorization;
-global using CollectionManagement.Infrastructure.Interfaces.Comments;
-global using CollectionManagement.Shared.DTOs.Comments;
-global using CollectionManagement.Infrastructure.Interfaces.CustomFields;
-global using CollectionManagement.Infrastructure.Interfaces.Common;
-global using CollectionManagement.Shared.ViewModels;
-global using CollectionManagement.Infrastructure.Services.Items;
-global using CollectionManagement.Shared.DTOs.Items;
-global using CollectionManagement.Shared.DTOs.CustomFields;
-global using CollectionManagement.Domain.Entities.Items;
-global using CollectionManagement.Infrastructure.Interfaces.Tags;
-global using CollectionManagement.Shared.DTOs.Users;
-global using CollectionManagement.Shared.DTOs;
-global using CollectionManagement.Infrastructure.Interfaces.Admins;
-global using CollectionManagement.Infrastructure.Interfaces.Files;
-global using CollectionManagement.Infrastructure.Services.Accounts;
-global using CollectionManagement.Infrastructure.Services.Admins;
-global using CollectionManagement.Infrastructure.Services.Collections;
-global using CollectionManagement.Infrastructure.Services.Comments;
-global using CollectionManagement.Infrastructure.Services.Common;
-global using CollectionManagement.Infrastructure.Services.CustomFields;
-global using CollectionManagement.Infrastructure.Services.Files;
-global using CollectionManagement.Infrastructure.Services.Likes;
-global using CollectionManagement.Domain.Entities.Users;
-global using CollectionManagement.Infrastructure.Services.Tags;
-global using CollectionManagement.Infrastructure.Services.Users;
-global using Buzruk.GenericRepository.Async;
-global using CollectionManagement.Application.DbContexts;
+global using Microsoft.AspNetCore.Identity;
 global using Microsoft.EntityFrameworkCore;
-global using System.Text.Json;
+global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.IdentityModel.Tokens;
+
+global using System.Net;
+global using System.Text.Json;
 global using System.Text;
+global using System.Diagnostics;
+
+global using Buzruk.GenericRepository.Async;
+global using Serilog;
+global using Serilog.Events;
+global using Asp.Versioning;
+
+
+
+global using CollectionManagement.Shared.Helpers;
+global using CollectionManagement.Shared.DTOs.OneTimePassword;
+global using CollectionManagement.Shared.Utils;
+global using CollectionManagement.Shared.Exceptions;
+global using CollectionManagement.Shared.DTOs.Collections;
+global using CollectionManagement.Shared.DTOs.Comments;
+global using CollectionManagement.Shared.ViewModels;
+global using CollectionManagement.Shared.DTOs.Items;
+global using CollectionManagement.Shared.DTOs.CustomFields;
+global using CollectionManagement.Domain.Entities;
+global using CollectionManagement.Shared.DTOs.Users;
+global using CollectionManagement.Shared.DTOs;
+global using CollectionManagement.Shared.Constants;
+
+global using CollectionManagement.Application.Services;
+global using CollectionManagement.Application.Interfaces;
+global using CollectionManagement.Application.Interfaces.Common;
+global using CollectionManagement.Application.Services.Common;
+
 global using CollectionManagement.Presentation.Configurations;
 global using CollectionManagement.Presentation.Configurations.LayerConfigurations;
 global using CollectionManagement.Presentation.Middlewares;
-global using System.Net;
-global using Serilog;
-global using Serilog.Events;
+
+global using CollectionManagement.Infrastructure.DbContexts;
 #endregion

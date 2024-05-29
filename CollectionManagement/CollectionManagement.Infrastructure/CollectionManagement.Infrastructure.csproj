@@ -7,18 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="C:\Users\buzurgmexr\.nuget\packages\buzruk.genericrepository\1.4.0\contentFiles\any\net8.0\icon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Buzruk.GenericRepository" Version="1.8.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.5.1" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CollectionManagement.Shared\CollectionManagement.Shared.csproj" />
+    <ProjectReference Include="..\CollectionManagement.Domain\CollectionManagement.Domain.csproj" />
   </ItemGroup>
-
 </Project>

@@ -1,5 +1,7 @@
 ﻿using AspNetCoreRateLimit;
-using CollectionManagement.Domain.Entities.Users;
+using CollectionManagement.Domain.Entities;
+using CollectionManagement.Domain.Enums;
+using CollectionManagement.Shared.Security;
 using Microsoft.AspNetCore.Identity;
 
 namespace CollectionManagement.Presentation;
@@ -80,24 +82,27 @@ public static class Startup
 
     #region Identity
 
-    //builder.Services.AddIdentity<User, IdentityRole>(options =>
-    //{
-    //  options.Password.RequireDigit = true;
-    //  options.Password.RequiredLength = 6;
-    //  options.Password.RequireNonAlphanumeric = false;
-    //  options.Password.RequireUppercase = false;
-    //}).AddEntityFrameworkStores<AppDbContext>()
-    //  .AddDefaultTokenProviders();
+    builder.Services.AddIdentity<User, IdentityRole>(options =>
+    {
+      options.Password.RequireDigit = true;
+      options.Password.RequiredLength = 6;
+      options.Password.RequireNonAlphanumeric = false;
+      options.Password.RequireUppercase = false;
+
+      options.User.RequireUniqueEmail = true;
+      options.SignIn.RequireConfirmedEmail = true;
+    }).AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
     //add role manager to DI
 
     #endregion
 
     #region Custom DI Services
-    builder.Services.AddHttpContextAccessor();
-    builder.Services.ConfigureApplication(builder.Configuration);
+    //builder.Services.AddHttpContextAccessor();
+    builder.Services.ConfigureDatabase(builder.Configuration);
     builder.Services.ConfigureWeb(builder.Configuration);
-    builder.Services.ConfigureServices();
+    builder.Services.ConfigureServices(builder.Environment);
     #endregion
 
     #region CORS Policy for all origins
@@ -174,8 +179,8 @@ public static class Startup
     if (app.Environment.IsDevelopment())
     {
       app.UseDeveloperExceptionPage();
-      app.UseSwagger();
-      app.UseSwaggerUI();
+      //app.UseSwagger();
+      //app.UseSwaggerUI();
     }
 
     if (app.Environment.IsProduction())
@@ -226,16 +231,6 @@ public static class Startup
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
 
-    app.MapAreaControllerRoute(
-       name: "administrators",
-       areaName: "admins",
-       pattern: "admins/{controller=Home}/{action=Index}/{id?}");
-
-    app.MapAreaControllerRoute(
-       name: "administrators",
-       areaName: "adminusers",
-       pattern: "adminusers/{controller=Home}/{action=Index}/{id?}");
-
     app.SeedRolesToDatabase().Wait();
   }
 
@@ -255,14 +250,15 @@ public static class Startup
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     var admin = new User
     {
-      //UserName = "+998999999999",
-      //PhoneNumberConfirmed = true,
-      //PhoneNumber = "+998999999999",
-      //Address = "Database",
-      //AvatarUrl = "https://cdn-icons-png.flaticon.com/512/5564/5564849.png",
-      //BirthDate = DateTime.Now,
-      //Gender = 0
+      UserName = "Buzurgmexr Sultonaliyev",
+      Email = "buzurgmexrubon@gmail.com",
+      //Image = "",       // string
+      BirthDate = new DateTime(2001, 9, 23),
+      Role = RoleConstants.SuperAdmin,
+      Status = StatusType.Active,
+      CreatedAt = DateTime.Now,
     };
+
     var adminPassword = "Adm1nj0nm1san$";
     var user = await userManager.FindByNameAsync(admin.UserName);
     if (user == null)

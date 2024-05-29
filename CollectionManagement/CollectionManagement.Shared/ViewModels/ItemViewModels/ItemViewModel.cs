@@ -1,4 +1,4 @@
-﻿using CollectionManagement.Domain.Entities.Items;
+﻿using CollectionManagement.Domain.Entities;
 
 namespace CollectionManagement.Shared.ViewModels.ItemViewModels;
 
@@ -20,7 +20,7 @@ public class ItemViewModel
 
   public int CommentCount { get; set; }
 
-  public int UserId { get; set; }
+  public string UserId { get; set; } = string.Empty;
 
   public Dictionary<string, object>? CustomFieldValues { get; set; }
 

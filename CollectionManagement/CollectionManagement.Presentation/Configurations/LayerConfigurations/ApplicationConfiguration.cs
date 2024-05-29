@@ -1,17 +1,30 @@
-﻿using Microsoft.Extensions.Options;
+﻿using CollectionManagement.Application.Interfaces;
+using CollectionManagement.Application.Services;
 
 namespace CollectionManagement.Presentation.Configurations.LayerConfigurations;
-
 public static class ApplicationConfiguration
 {
-  public static void ConfigureApplication(this IServiceCollection services, IConfiguration configuration)
+  public static void ConfigureServices(this IServiceCollection services, IWebHostEnvironment webHostEnvironment)
   {
-    AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-
-    services.AddDbContext<AppDbContext>(
-      options => options.UseNpgsql(configuration.GetConnectionString("PostgreSQL"))
-    );
-
+    services.AddScoped<IAuthService, AuthService>();
     services.AddScoped<IUnitOfWorkAsync, UnitOfWorkAsync<AppDbContext>>();
+    services.AddScoped<IImageService, ImageService>();
+    services.AddScoped<IIdentityService, IdentityService>();
+    services.AddScoped<ICollectionService, CollectionService>();
+    services.AddScoped<ICommentService, CommentService>();
+    services.AddScoped<ICustomFieldService, CustomFieldService>();
+    services.AddScoped<IItemService, ItemService>();
+    services.AddScoped<ILikeService, LikeService>();
+    services.AddScoped<ITagService, TagService>();
+    services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IOneTimePasswordService, OneTimePasswordService>();
+
+
+
+    //services.AddSingleton<IWebHostBuilder, WebHostBuilder>();
+
+    services.AddMemoryCache();
+    //services.AddHttpContextAccessor();
   }
 }
+
