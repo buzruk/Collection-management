@@ -14,59 +14,7 @@ public static class Startup
   {
     #region Default DI Services
     builder.Services.AddControllersWithViews();
-    //builder.Services.AddControllers(
-    //  // Agar "Accept" "application/json" request kelmasa 406 Not Acceptable qaytaradi
-    //  options => options.ReturnHttpNotAcceptable = true
-    //  )
-    //  .AddXmlSerializerFormatters();
-
-    //builder.Services.AddEndpointsApiExplorer();
-    //builder.Services.AddSwaggerGen(options =>
-    //{
-    //    options.SwaggerDoc("v2", new OpenApiInfo { Title = "ICollection.swagger", Version = "v2" });
-    //});
-    //builder.Services.AddSwaggerGen(option =>
-    //{
-    //  option.SwaggerDoc("v1", new OpenApiInfo { Title = "Furniture API", Version = "v1" });
-    //  option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    //  {
-    //    In = ParameterLocation.Header,
-    //    Description = "Please enter a valid token",
-    //    Name = "Authorization",
-    //    Type = SecuritySchemeType.Http,
-    //    BearerFormat = "JWT",
-    //    Scheme = "Bearer"
-    //  });
-    //  option.AddSecurityRequirement(new OpenApiSecurityRequirement
-    //        {
-    //            {
-    //                new OpenApiSecurityScheme
-    //                {
-    //                    Reference = new OpenApiReference
-    //                    {
-    //                        Type=ReferenceType.SecurityScheme,
-    //                        Id="Bearer"
-    //                    }
-    //                },
-    //                new string[]{}
-    //            }
-    //        });
-
-    //var filePath = Path.Combine(AppContext.BaseDirectory, "Furniture_API.xml");
-    //if (File.Exists(filePath))
-    //{
-    //  option.IncludeXmlComments(filePath);
-    //}
-
-    // this is way to represent xml comments in SwaggerUI
-    //
-    //var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    //var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
-
-    //option.IncludeXmlComments(xmlCommentsFullPath);
-
-    //});
-
+    builder.Services.AddRazorPages();
     #endregion
 
     #region DBContext
@@ -90,8 +38,8 @@ public static class Startup
       options.Password.RequireUppercase = false;
 
       options.User.RequireUniqueEmail = true;
-      options.SignIn.RequireConfirmedEmail = true;
-    }).AddEntityFrameworkStores<AppDbContext>()
+      options.SignIn.RequireConfirmedEmail = false;
+    }).AddEntityFrameworkStores<AppIdentityDbContext>()
     .AddDefaultTokenProviders();
 
     //add role manager to DI
@@ -99,7 +47,6 @@ public static class Startup
     #endregion
 
     #region Custom DI Services
-    //builder.Services.AddHttpContextAccessor();
     builder.Services.ConfigureDatabase(builder.Configuration);
     builder.Services.ConfigureWeb(builder.Configuration);
     builder.Services.ConfigureServices(builder.Environment);
@@ -153,16 +100,6 @@ public static class Startup
     builder.Services.AddHttpContextAccessor();
     #endregion
 
-    #region API Versioning
-    //builder.Services.AddApiVersioning(options =>
-    //{
-    //  options.ReportApiVersions = true;
-    //  options.DefaultApiVersion = new ApiVersion(1, 0);
-    //  options.AssumeDefaultVersionWhenUnspecified = true;
-    //  options.ApiVersionReader = new UrlSegmentApiVersionReader();
-    //});
-    #endregion
-
     #region Redis
     //builder.Services.Configure<ConfigurationOptions>(builder.Configuration.GetSection("RedisCacheOptions"));
     //builder.Services.AddStackExchangeRedisCache(setupAction =>
@@ -199,37 +136,24 @@ public static class Startup
     {
       if (context.HttpContext.Response.StatusCode == (int)HttpStatusCode.Unauthorized)
       {
-        context.HttpContext.Response.Redirect("../accounts/login");
+        context.HttpContext.Response.Redirect("../auth/login");
       }
     });
 
     app.UseStaticFiles();
 
-    // i don't know. but i watch in pluralsight course
-    // Authorization must be after Authentication !!!
-    //
-    //builder.Services.AddAuthorization(options =>
-    //{
-    //    options.AddPolicy("MustBeFromAntwerp", policy =>
-    //    {
-    //        policy.RequireAuthenticatedUser();
-    //        policy.RequireClaim("city", "Antwerp");
-    //    });
-    //});
-    // after this add to [Authorize(Policy = "MustBeFromAntwerp")]
-
     app.UseAuthentication();
     // disabled for development
     // app.UseMiddleware<JwtValidation>();
     app.UseAuthorization();
-    //var versionSet = app.NewApiVersionSet()
-    //                    .HasApiVersion(new ApiVersion(1, 0))
-    //                    .Build();
-    //app.MapControllers().WithApiVersionSet(versionSet);
 
     app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{action=Index}/{id?}");
+    app.MapControllerRoute(
+       name: "areas",
+          pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    app.MapRazorPages();
 
     app.SeedRolesToDatabase().Wait();
   }
@@ -250,13 +174,14 @@ public static class Startup
     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
     var admin = new User
     {
-      UserName = "Buzurgmexr Sultonaliyev",
-      Email = "buzurgmexrubon@gmail.com",
-      //Image = "",       // string
+      UserName = "admin",
+      Email = "buzurgmexrs@gmail.com",
+      EmailConfirmed = true,
       BirthDate = new DateTime(2001, 9, 23),
       Role = RoleConstants.SuperAdmin,
       Status = StatusType.Active,
       CreatedAt = DateTime.Now,
+      UpdatedAt = DateTime.Now,
     };
 
     var adminPassword = "Adm1nj0nm1san$";

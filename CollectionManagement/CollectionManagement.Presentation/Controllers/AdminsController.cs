@@ -1,8 +1,5 @@
 ﻿namespace CollectionManagement.Presentation.Controllers;
 
-[ApiController]
-[ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
 public class AdminsController(IUserService userService,
                               IAuthService authService)
     : Controller
@@ -21,7 +18,7 @@ public class AdminsController(IUserService userService,
   /// <response code="401">Created new admin</response>
   /// <response code="404">Created new admin</response>
   /// <response code="500">Created new admin</response>
-  [HttpPost("create")]
+  [HttpPost]
   //[Authorize(Roles = RoleConstants.SuperAdmin)]
   [Authorize(Roles = RoleConstants.SuperAdmin)]
   [ProducesResponseType(StatusCodes.Status200OK)]
@@ -52,7 +49,7 @@ public class AdminsController(IUserService userService,
     }
   }
 
-  [HttpPut("update")]
+  [HttpPut]
   //[Authorize(Roles = $"{RoleConstants.SuperAdmin}, {RoleConstants.Admin}")]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -82,7 +79,7 @@ public class AdminsController(IUserService userService,
     }
   }
 
-  [HttpGet("get-all")]
+  [HttpGet]
   //[Authorize(Roles = RoleConstants.SuperAdmin)]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -113,7 +110,7 @@ public class AdminsController(IUserService userService,
     }
   }
 
-  [HttpDelete("{id}")]
+  [HttpDelete]
   //[Authorize(Roles = RoleConstants.SuperAdmin)]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -143,28 +140,28 @@ public class AdminsController(IUserService userService,
     }
   }
 
-  [HttpPost("block")]
+  [HttpPost]
   public async Task<IActionResult> Block(string id)
   {
     await _userService.BlockAsync(id);
     return RedirectToAction("Index", "Home");
   }
 
-  [HttpPost("active")]
+  [HttpPost]
   public async Task<IActionResult> Active(string id)
   {
     await _userService.ActiveAsync(id);
     return RedirectToAction("Index", "Home");
   }
 
-  [HttpDelete("deleteimage")]
+  [HttpDelete]
   public async Task<IActionResult> DeleteImage(string id)
   {
     await _userService.DeleteProfileImageAsync(id);
     return View();
   }
 
-  [HttpPut("activate/{userId}")]
+  [HttpPut]
   //[Authorize(Roles = RoleConstants.SuperAdmin)]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -194,7 +191,7 @@ public class AdminsController(IUserService userService,
     }
   }
 
-  [HttpPut("reset-password/{userId}")]
+  [HttpPut]
   //[Authorize(Roles = RoleConstants.SuperAdmin)]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]

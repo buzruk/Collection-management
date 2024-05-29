@@ -98,7 +98,7 @@
   </style>
 </head>
 <body>
-  <form asp-controller="accounts" asp-action="register" novalidate="novalidate" method="post">
+  <form asp-controller="auth" asp-action="register" novalidate="novalidate" method="post">
     <h2>Welcome to ICollection Registration</h2>
     <div class="form-group fullname">
       <label for="fullname">UserName</label>
@@ -127,6 +127,14 @@
         </span>
       </button>
     </div>
+      <div class="text-center p-t-115">
+        <span class="txt1">
+          Do you have an account?
+        </span>
+        <a class="txt2" asp-controller="auth" asp-action="login">
+          Sign In
+        </a>
+      </div>
   </form>
 </body>
 </html>

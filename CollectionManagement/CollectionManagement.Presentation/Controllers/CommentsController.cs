@@ -1,6 +1,5 @@
 ﻿namespace CollectionManagement.Presentation.Controllers;
 
-[Route("comments")]
 public class CommentsController(ICommentService commentService,
                                 IHttpContextAccessor httpContextAccessor,
                                 IUserService userService)
@@ -20,7 +19,7 @@ public class CommentsController(ICommentService commentService,
     return View(res);
   }
 
-  [HttpGet("create")]
+  [HttpGet]
   public IActionResult Create(int id)
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
@@ -29,7 +28,7 @@ public class CommentsController(ICommentService commentService,
   }
 
   //[Authorize]
-  [HttpPost("create")]
+  [HttpPost]
   public async Task<IActionResult> Create(int id, CommentDto commentDto)
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
@@ -48,7 +47,7 @@ public class CommentsController(ICommentService commentService,
   }
 
   //[Authorize]
-  [HttpGet("delete")]
+  [HttpGet]
   public async Task<IActionResult> Delete(int id, int commentId)
   {
     ViewBag.Id = id;

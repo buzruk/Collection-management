@@ -1,6 +1,5 @@
 ﻿namespace CollectionManagement.Presentation.Controllers;
 
-[Route("collections")]
 public class CollectionsController(ICollectionService collectionService,
                                    IUserService userService,
                                    IHttpContextAccessor httpContextAccessor,
@@ -21,7 +20,7 @@ public class CollectionsController(ICollectionService collectionService,
     return View(result);
   }
 
-  [HttpGet("search")]
+  [HttpGet]
   public async Task<IActionResult> SearchAsync(string name, int page = 1)
   {
     try
@@ -36,16 +35,16 @@ public class CollectionsController(ICollectionService collectionService,
     }
   }
 
-  //[Authorize]
-  [HttpGet("create")]
+  [Authorize]
+  [HttpGet]
   public IActionResult Create()
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
     return View("Create");
   }
 
-  //[Authorize]
-  [HttpPost("create")]
+  [Authorize]
+  [HttpPost]
   public async Task<IActionResult> CreateAsync(CollectionDto collectionCreateDto)
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
@@ -71,7 +70,7 @@ public class CollectionsController(ICollectionService collectionService,
   }
 
   //[Authorize]
-  [HttpPost("delete")]
+  [HttpPost]
   public async Task<IActionResult> DeleteAsync(int id)
   {
     try
@@ -88,7 +87,7 @@ public class CollectionsController(ICollectionService collectionService,
     }
   }
   //[Authorize]
-  [HttpGet("update")]
+  [HttpGet]
   public ActionResult Update(int id)
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
@@ -97,7 +96,7 @@ public class CollectionsController(ICollectionService collectionService,
   }
 
   //[Authorize]
-  [HttpPost("update")]
+  [HttpPost]
   public async Task<IActionResult> UpdateAsync(int id, CollectionUpdateDto collectionUpdateDto)
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
@@ -123,7 +122,7 @@ public class CollectionsController(ICollectionService collectionService,
   }
 
 
-  [HttpGet("gettop")]
+  [HttpGet]
   public async Task<IActionResult> TopCollection(int page = 1)
   {
     try
@@ -138,7 +137,7 @@ public class CollectionsController(ICollectionService collectionService,
   }
 
   //[Authorize]
-  [HttpGet("likecollection")]
+  [HttpGet]
   public async Task<IActionResult> LikeCollection(int collectionId)
   {
     try

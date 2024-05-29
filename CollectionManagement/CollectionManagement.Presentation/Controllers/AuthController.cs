@@ -1,9 +1,6 @@
 ﻿namespace CollectionManagement.Presentation.Controllers;
 
-[ApiController]
-[ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
-[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
+//[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
 public class AuthController(IUserService userService,
                             IAuthService authService,
                             IOneTimePasswordService oneTimePasswordService,
@@ -18,14 +15,10 @@ public class AuthController(IUserService userService,
   /// <summary>
   /// [All] Login qilish (Telefon raqam tasdiqlangan bo'lishi kerak)
   /// </summary>
-  [HttpPost("login")]
+  [HttpPost]
   [AllowAnonymous]
   [ValidateAntiForgeryToken]
-  [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
-  [ProducesResponseType(StatusCodes.Status400BadRequest)]
-  [ProducesResponseType(StatusCodes.Status404NotFound)]
-  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-  public async Task<IActionResult> Login([FromBody] UserLoginDto request)
+  public async Task<IActionResult> Login( UserLoginDto request)
   {
     if (ModelState.IsValid)
     {
@@ -63,19 +56,16 @@ public class AuthController(IUserService userService,
     }
   }
 
-  [HttpGet("login")]
+  [HttpGet]
+  [AllowAnonymous]
   public IActionResult Login() => View("Login");
 
   /// <summary>
   /// [User] Ro'yxatdan o'tish
   /// </summary>
-  [HttpPost("register")]
+  [HttpPost]
   [AllowAnonymous]
   [ValidateAntiForgeryToken]
-  [ProducesResponseType(StatusCodes.Status200OK)]
-  [ProducesResponseType(StatusCodes.Status400BadRequest)]
-  [ProducesResponseType(StatusCodes.Status404NotFound)]
-  [ProducesResponseType(StatusCodes.Status500InternalServerError)]
   public async Task<IActionResult> Register([FromBody] UserRegisterDto request)
   {
     try
@@ -99,14 +89,15 @@ public class AuthController(IUserService userService,
     }
   }
 
-  [HttpGet("register")]
+  [HttpGet]
+  [AllowAnonymous]
   public IActionResult Register() => View("Register");
 
 
   /// <summary>
   /// [All] Telefon raqamni tasdiqlash uchun sms yuborish
   /// </summary>
-  [HttpPost("send-otp")]
+  [HttpPost]
   [AllowAnonymous]
   [ValidateAntiForgeryToken]
   [ProducesResponseType(StatusCodes.Status200OK)]
@@ -132,7 +123,7 @@ public class AuthController(IUserService userService,
   /// <summary>
   /// [All] Kodni tasdiqlash 2 daqiqa
   /// </summary>
-  [HttpPost("confirm-email")]
+  [HttpPost]
   [AllowAnonymous]
   [ValidateAntiForgeryToken]
   [ProducesResponseType(StatusCodes.Status200OK)]
@@ -180,7 +171,7 @@ public class AuthController(IUserService userService,
   /// <summary>
   /// [All] Logout qilish joriy tokenni o'chiradi
   /// </summary>
-  [HttpPut("logout")]
+  [HttpPut]
   //[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -211,7 +202,7 @@ public class AuthController(IUserService userService,
   /// <summary>
   /// [All] Telefon raqamni o'zgartirish
   /// </summary>
-  [HttpPut("change-password")]
+  [HttpPut]
   //[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -244,7 +235,7 @@ public class AuthController(IUserService userService,
   /// </summary>
   /// <param name="dto"></param>
   /// <returns></returns>
-  [HttpDelete("{id}")]
+  [HttpDelete]
   //[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
   // Development uchun ochiq qoldirildi
   [ProducesResponseType(StatusCodes.Status200OK)]
@@ -272,7 +263,7 @@ public class AuthController(IUserService userService,
     }
   }
 
-  [HttpPost("profile/set-avatar")]
+  [HttpPost]
   //[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
   [ValidateAntiForgeryToken]
   [ProducesResponseType(StatusCodes.Status200OK)]
@@ -300,7 +291,7 @@ public class AuthController(IUserService userService,
     }
   }
 
-  [HttpPut("profile/change-avatar")]
+  [HttpPut]
   //[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -327,7 +318,7 @@ public class AuthController(IUserService userService,
     }
   }
 
-  [HttpDelete("profile/delete-avatar/{id}")]
+  [HttpDelete]
   //[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -355,7 +346,7 @@ public class AuthController(IUserService userService,
     }
   }
 
-  [HttpGet("valitade-token")]
+  [HttpGet]
   //[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -364,7 +355,7 @@ public class AuthController(IUserService userService,
     return Ok();
   }
 
-  [HttpPut("update-profile")]
+  [HttpPut]
   //[Authorize(Roles = $"{RoleConstants.User}, {RoleConstants.Admin}, {RoleConstants.SuperAdmin}")]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]

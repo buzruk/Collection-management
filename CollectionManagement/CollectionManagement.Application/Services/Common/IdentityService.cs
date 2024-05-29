@@ -9,19 +9,19 @@ public class IdentityService(IHttpContextAccessor httpContextAccessor)
   {
     get
     {
-      var res = _accessor.HttpContext!.User.FindFirst("Id");
-      return res is not null ? res.Value : "";
-      //var user = _accessor.HttpContext?.User;
-      //if (user !=  null && user.Identity!.IsAuthenticated)
-      //{
-      //  var userIdClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-      //  if (userIdClaim != null)
-      //  {
-      //    //collection.UserId = userIdClaim.Value;
-      //    return int.Parse(userIdClaim.Value);
-      //  }
-      //}
-      //return null;
+      //var res = _accessor.HttpContext!.User.FindFirst("Id");
+      //return res is not null ? res.Value : "";
+      var user = _accessor.HttpContext?.User;
+      if (user !=  null && user.Identity!.IsAuthenticated)
+      {
+        var userIdClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
+        if (userIdClaim != null)
+        {
+          //collection.UserId = userIdClaim.Value;
+          return userIdClaim.Value;
+        }
+      }
+      return "";
     }
   }
 

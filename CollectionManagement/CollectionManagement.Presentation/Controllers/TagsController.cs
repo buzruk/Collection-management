@@ -1,17 +1,18 @@
-﻿namespace CollectionManagement.Presentation.Controllers;
+﻿using CollectionManagement.Shared.DTOs.Tags;
 
-[Route("tags")]
+namespace CollectionManagement.Presentation.Controllers;
+
 public class TagsController(ITagService tagService)
   : Controller
 {
     private readonly ITagService _tagService = tagService;
 
-    [HttpPost("create")]
-    public async Task<IActionResult> Create(IEnumerable<string> tags, Item item)
+    [HttpPost]
+    public async Task<IActionResult> Create(AddTagDto request)
     {
         try
         {
-            await _tagService.AddAsync(tags, item);
+            await _tagService.AddAsync(request);
             return RedirectToAction("Index", "Collection");
         }
         catch (Exception ex)
@@ -21,12 +22,12 @@ public class TagsController(ITagService tagService)
         }
     }
 
-    [HttpPut("update")]
-    public async Task<IActionResult> Update(IEnumerable<string> tags, Item item)
+    [HttpPut]
+    public async Task<IActionResult> Update(UpdateTagDto request)
     {
         try
         {
-            await _tagService.UpdateAsync(tags, item);
+            await _tagService.UpdateAsync(request);
             return RedirectToAction("Index", "Collection");
         }
         catch (Exception ex)

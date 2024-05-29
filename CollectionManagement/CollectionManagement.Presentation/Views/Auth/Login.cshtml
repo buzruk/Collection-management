@@ -84,7 +84,7 @@
 <body>
   <div class="limiter">
 
-    <form class="login100-form validate-form" asp-controller="accounts" asp-action="login" method="post">
+    <form class="login100-form validate-form" asp-controller="auth" asp-action="login" method="post">
       <span class="login100-form-title p-b-26">
         Welcome to ICollection Log In
       </span>
@@ -97,7 +97,7 @@
         <span asp-validation-for="Password" class="text-danger"></span>
       </div>
       <div class="container-login100-form-btn">
-        <button class="login100-form-btn">
+        <button class="login100-form-btn" type="submit">
           Login
         </button>
       </div>
@@ -105,7 +105,7 @@
         <span class="txt1">
           Don’t have an account?
         </span>
-        <a class="txt2" asp-controller="accounts" asp-action="register">
+        <a class="txt2" asp-controller="auth" asp-action="register">
           Sign Up
         </a>
       </div>

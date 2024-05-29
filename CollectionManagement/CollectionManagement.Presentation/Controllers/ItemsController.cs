@@ -1,6 +1,5 @@
 ﻿namespace CollectionManagement.Presentation.Controllers;
 
-[Route("items")]
 public class ItemsController(ItemService itemService,
                              IHttpContextAccessor httpContextAccessor,
                              IUserService userService,
@@ -40,7 +39,7 @@ public class ItemsController(ItemService itemService,
   }
 
   //[Authorize]
-  [HttpGet("create")]
+  [HttpGet]
   public async Task<IActionResult> Create(int collectionId)
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
@@ -68,7 +67,7 @@ public class ItemsController(ItemService itemService,
   }
 
   //[Authorize]
-  [HttpPost("create")]
+  [HttpPost]
   public async Task<IActionResult> CreateAsync(ItemDto itemDto)
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
@@ -88,7 +87,7 @@ public class ItemsController(ItemService itemService,
   }
 
   //[Authorize]
-  [HttpPost("delete")]
+  [HttpPost]
   public async Task<IActionResult> DeleteAsync(int id, int itemId)
   {
     ViewBag.CollectionId = id;
@@ -107,7 +106,7 @@ public class ItemsController(ItemService itemService,
   }
 
   //[Authorize]
-  [HttpGet("update")]
+  [HttpGet]
   public IActionResult Update(int id)
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
@@ -116,7 +115,7 @@ public class ItemsController(ItemService itemService,
   }
 
   //[Authorize]
-  [HttpPost("update")]
+  [HttpPost]
   public async Task<IActionResult> UpdateAsync(int id, ItemUpdateDto item)
   {
     ViewBag.UserName = _httpContextAccessor.HttpContext?.User.FindFirst("UserName")?.Value;
@@ -135,7 +134,7 @@ public class ItemsController(ItemService itemService,
   }
 
   //[Authorize]
-  [HttpGet("likeitem")]
+  [HttpGet]
   public async Task<IActionResult> LikeItem(int id, int itemId)
   {
     ViewBag.CollectionId = id;

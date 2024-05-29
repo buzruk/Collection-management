@@ -1,7 +1,7 @@
 ﻿namespace CollectionManagement.Infrastructure.DbContexts;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) 
-  : IdentityDbContext<User>(options)
+  : DbContext(options)
 {
 
   public virtual DbSet<Collection> Collections { 

@@ -1,11 +1,11 @@
-﻿using CollectionManagement.Domain.Entities;
+﻿using CollectionManagement.Shared.DTOs.Tags;
 
 namespace CollectionManagement.Application.Interfaces;
 
 public interface ITagService
 {
-    Task AddAsync(IEnumerable<string> tags, Item item, CancellationToken cancellationToken = default);
+  Task AddAsync(AddTagDto dto, CancellationToken cancellationToken = default);
 
-    Task UpdateAsync(IEnumerable<string> tags, Item item, CancellationToken cancellationToken = default);
+  Task UpdateAsync(UpdateTagDto dto, CancellationToken cancellationToken = default);
 }
 

@@ -5,7 +5,7 @@ public class CustomFieldsController(ICustomFieldService customFieldService)
 {
     private readonly ICustomFieldService _customFieldService = customFieldService;
 
-    [HttpPost("create")]
+    [HttpPost]
     public async Task<IActionResult> Create(int id, CustomFieldDto customFieldDto)
     {
         try
@@ -22,7 +22,7 @@ public class CustomFieldsController(ICustomFieldService customFieldService)
         }
     }
 
-    [HttpDelete("delete")]
+    [HttpDelete]
     public async Task<IActionResult> Delete(int id)
     {
         try

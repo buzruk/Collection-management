@@ -14,9 +14,6 @@ global using System.Diagnostics;
 global using Buzruk.GenericRepository.Async;
 global using Serilog;
 global using Serilog.Events;
-global using Asp.Versioning;
-
-
 
 global using CollectionManagement.Shared.Helpers;
 global using CollectionManagement.Shared.DTOs.OneTimePassword;

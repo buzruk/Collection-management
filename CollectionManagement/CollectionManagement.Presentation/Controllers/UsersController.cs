@@ -130,16 +130,13 @@
 //    }
 //}
 
-[ApiController]
-[ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
 //[Authorize(Roles = $"{RoleConstants.SuperAdmin}, {RoleConstants.Admin}")]
 public class UsersController(IUserService userService)
     : Controller
 {
   private readonly IUserService userService = userService;
 
-  [HttpGet("all")]
+  [HttpGet]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status401Unauthorized)]
   [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -151,7 +148,7 @@ public class UsersController(IUserService userService)
     return Ok(users);
   }
 
-  [HttpGet("{id}")]
+  [HttpGet]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status401Unauthorized)]
   [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -174,7 +171,7 @@ public class UsersController(IUserService userService)
     }
   }
 
-  [HttpDelete("{id}")]
+  [HttpDelete]
   [ProducesResponseType(StatusCodes.Status200OK)]
   [ProducesResponseType(StatusCodes.Status400BadRequest)]
   [ProducesResponseType(StatusCodes.Status401Unauthorized)]

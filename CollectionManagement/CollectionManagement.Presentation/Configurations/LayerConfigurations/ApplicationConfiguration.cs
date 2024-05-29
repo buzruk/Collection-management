@@ -1,30 +1,22 @@
-﻿using CollectionManagement.Application.Interfaces;
-using CollectionManagement.Application.Services;
-
-namespace CollectionManagement.Presentation.Configurations.LayerConfigurations;
+﻿namespace CollectionManagement.Presentation.Configurations.LayerConfigurations;
 public static class ApplicationConfiguration
 {
   public static void ConfigureServices(this IServiceCollection services, IWebHostEnvironment webHostEnvironment)
   {
-    services.AddScoped<IAuthService, AuthService>();
-    services.AddScoped<IUnitOfWorkAsync, UnitOfWorkAsync<AppDbContext>>();
-    services.AddScoped<IImageService, ImageService>();
-    services.AddScoped<IIdentityService, IdentityService>();
-    services.AddScoped<ICollectionService, CollectionService>();
-    services.AddScoped<ICommentService, CommentService>();
-    services.AddScoped<ICustomFieldService, CustomFieldService>();
-    services.AddScoped<IItemService, ItemService>();
-    services.AddScoped<ILikeService, LikeService>();
-    services.AddScoped<ITagService, TagService>();
-    services.AddScoped<IUserService, UserService>();
-    services.AddScoped<IOneTimePasswordService, OneTimePasswordService>();
+    services.AddTransient<IAuthService, AuthService>();
+    services.AddTransient<IUnitOfWorkAsync, UnitOfWorkAsync<AppDbContext>>();
+    services.AddTransient<IImageService, ImageService>();
+    services.AddTransient<IIdentityService, IdentityService>();
+    services.AddTransient<ICollectionService, CollectionService>();
+    services.AddTransient<ICommentService, CommentService>();
+    services.AddTransient<ICustomFieldService, CustomFieldService>();
+    services.AddTransient<IItemService, ItemService>();
+    services.AddTransient<ILikeService, LikeService>();
+    services.AddTransient<ITagService, TagService>();
+    services.AddTransient<IUserService, UserService>();
+    services.AddTransient<IOneTimePasswordService, OneTimePasswordService>();
 
-
-
-    //services.AddSingleton<IWebHostBuilder, WebHostBuilder>();
-
-    services.AddMemoryCache();
-    //services.AddHttpContextAccessor();
+    //services.AddMemoryCache();
   }
 }
 

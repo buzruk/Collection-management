@@ -1,42 +1,52 @@
 ﻿using CollectionManagement.Domain.Entities;
+using CollectionManagement.Shared.DTOs.Tags;
 
 namespace CollectionManagement.Application.Services;
 
 public class TagService(IUnitOfWorkAsync unitOfWork)
   : ITagService
 {
-    private readonly IUnitOfWorkAsync _unitOfWork = unitOfWork;
+  private readonly IUnitOfWorkAsync _unitOfWork = unitOfWork;
 
-    public async Task AddAsync(IEnumerable<string> tags,
-                               Item item,
-                               CancellationToken cancellationToken = default)
+  public async Task AddAsync(AddTagDto dto,
+                             CancellationToken cancellationToken = default)
+  {
+    if (dto is null)
+      throw new ArgumentNullException(nameof(dto));
+
+    dto.Item.Tags = [];
+
+    foreach (var tag in dto.Tags)
     {
-        item.Tags = [];
+      if (int.TryParse(tag, out var tagId))
+      {
+        var tagRepository = await _unitOfWork.GetRepositoryAsync<Tag>(cancellationToken);
+        var dbTag = await tagRepository.GetAsync(t => t.Id == tagId, cancellationToken: cancellationToken);
 
-        foreach (var tag in tags)
-        {
-            if (int.TryParse(tag, out var tagId))
-            {
-                var tagRepository = await _unitOfWork.GetRepositoryAsync<Tag>(cancellationToken);
-                var dbTag = await tagRepository.GetAsync(t => t.Id == tagId, cancellationToken: cancellationToken);
-
-                if (dbTag != null) item.Tags.Add(dbTag);
-                continue;
-            }
-            item.Tags.Add(new Tag { Name = tag });
-        }
+        if (dbTag != null) dto.Item.Tags.Add(dbTag);
+        continue;
+      }
+      dto.Item.Tags.Add(new Tag { Name = tag });
     }
+  }
 
-    public async Task UpdateAsync(IEnumerable<string> tags,
-                                  Item itemToUpdate,
-                                  CancellationToken cancellationToken = default)
+  public async Task UpdateAsync(UpdateTagDto dto,
+                                CancellationToken cancellationToken = default)
+  {
+    if (dto is null)
+      throw new ArgumentNullException(nameof(dto));
+
+    if (!dto.Tags.Any())
     {
-        if (!tags.Any())
-        {
-            itemToUpdate.Tags = [];
-            return;
-        }
-        await AddAsync(tags, itemToUpdate, cancellationToken);
+      dto.Item.Tags = [];
+      return;
     }
+    var updateTagDto = new UpdateTagDto()
+    {
+      Tags = dto.Tags,
+      Item = dto.Item
+    };
+    await AddAsync(updateTagDto, cancellationToken);
+  }
 }
 
